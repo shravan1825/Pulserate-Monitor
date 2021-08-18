@@ -12,10 +12,14 @@ while True:
     ret, frame = video.read()
     grayscale = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  #to convert to greyscale
     faces = hog_facedetector(grayscale)  # DETECT FACES
+
     for face in faces:
         face_landmarks = dlib_facelandmark(grayscale, face)
 
+
+
         for n in range(0, 81):
+
 
             f = face_landmarks.part(71).x  #using face landmarks 21, 71, 22 for roi
             g = face_landmarks.part(71).y
@@ -35,11 +39,14 @@ while True:
             pulserate3 = frame[f, g, 1]
             pulserate = int((pulserate3+pulserate2+pulserate1)/3)  #avg data of 3 points in the ROI for accuracy
             print(pulserate, 'is the pulse rate')
+
+
+
         cv2.imshow('Face Landmarks', frame)
 
-        g = cv2.waitKey(30) & 0xff
-        if g == 115:   #press s to stop
-            break
+    g = cv2.waitKey(30) & 0xff
+    if g == 115:   #press s to stop
+        break
 
-    video.release()   # to realese video capture object
-    cv2.destroyAllWindows()
+video.release()   # to realese video capture object
+cv2.destroyAllWindows()
